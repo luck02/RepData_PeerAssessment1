@@ -31,14 +31,14 @@ dim(activityDataNoNA)
 ```
 
 ## What is mean total number of steps taken per day?
-### make a histogram of the total number of steps taken each day
+* make a histogram of the total number of steps taken each day
 
 ```r
 ggplot(activityDataNoNA, aes( date, steps)) + geom_bar(stat="identity", color="blue", fill="blue", width=0.75) + labs(title="Histogram of total steps taken each day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
-### Calculate the total number of steps taken each day
+* Calculate the total number of steps taken each day
 
 ```r
 totalSteps <- aggregate(activityDataNoNA$steps, by=list(date=activityDataNoNA$date), FUN="sum")$x
@@ -58,7 +58,7 @@ median(totalSteps)
 ```
 
 ## What is the average daily activity pattern?
-### Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+* Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 
 ```r
@@ -69,7 +69,7 @@ ggplot(averageSteps, aes(interval, stepsMean)) + geom_line(color= "blue") + labs
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
-### Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+* Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```r
 averageSteps[averageSteps$stepsMean == max(averageSteps$stepsMean), ]
@@ -82,7 +82,7 @@ averageSteps[averageSteps$stepsMean == max(averageSteps$stepsMean), ]
 
 
 ## Imputing missing values
-### Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+* Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
 ```r
 sum(is.na(activityDataRaw))
@@ -91,11 +91,11 @@ sum(is.na(activityDataRaw))
 ```
 ## [1] 2304
 ```
-### Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+* Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
-I've decided to replace the NA's with the average of the other non-na values for that step interval.  I tried to do this with a more functional aproach but couldn't puzzle it out and ended up doing it in a loop
+I've decided to replace the NA's with the average of the other non-na values for that step interval.  I tried to do this with a more functional approach but couldn't puzzle it out and ended up doing it in a loop
 
-### Create a new dataset that is equal to the original dataset but with the missing data filled in.
+* Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```r
 activityDataImputed <- activityDataRaw 
@@ -111,7 +111,9 @@ sum(is.na(activityDataImputed))
 ```
 ## [1] 0
 ```
-### Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+* Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
 
 ```r
 ggplot(activityDataImputed, aes( date, steps)) + geom_bar(stat="identity", color="blue", fill="blue", width=0.75) + labs(title="Histogram of total steps taken each day (imputed data)")
@@ -146,6 +148,7 @@ medianImputed <- median(totalStepsImputed)
 meanDifference <- meanWithNA - meanImputed
 medianDifference <- medianWithNA - medianImputed
 ```
+
 The difference between the mean steps value of the imputed data set vs the raw dataset is: 0
 
 The difference between the median steps value of the imputed data set vs the raw dataset is: -1.1886792
@@ -210,4 +213,4 @@ xyplot(averageStepsByWeekday$mean ~ averageStepsByWeekday$interval | averageStep
 
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
-xyplot(averageStepsByWeekday$mean ~ averageStepsByWeekday$interval | averageStepsByWeekday$weekday, layout = c(1,2), type="l")
+
